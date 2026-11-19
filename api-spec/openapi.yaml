@@ -1,0 +1,688 @@
+openapi: 3.1.0
+info:
+  title: Api
+  version: 0.1.0
+  description: Creova API — AI-powered website builder for small businesses
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: businesses
+    description: Business management
+  - name: templates
+    description: Website templates
+  - name: leads
+    description: Lead management
+  - name: bookings
+    description: Booking management
+  - name: ai
+    description: AI content generation
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+
+  /businesses:
+    get:
+      operationId: listBusinesses
+      tags: [businesses]
+      summary: List all businesses
+      responses:
+        "200":
+          description: List of businesses
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Business"
+    post:
+      operationId: createBusiness
+      tags: [businesses]
+      summary: Create a business
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BusinessInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Business"
+
+  /businesses/{id}:
+    get:
+      operationId: getBusiness
+      tags: [businesses]
+      summary: Get a business by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Business
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Business"
+        "404":
+          description: Not found
+    patch:
+      operationId: updateBusiness
+      tags: [businesses]
+      summary: Update a business
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BusinessUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Business"
+    delete:
+      operationId: deleteBusiness
+      tags: [businesses]
+      summary: Delete a business
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+
+  /businesses/{id}/stats:
+    get:
+      operationId: getBusinessStats
+      tags: [businesses]
+      summary: Get dashboard statistics for a business
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BusinessStats"
+
+  /businesses/{id}/activity:
+    get:
+      operationId: getBusinessActivity
+      tags: [businesses]
+      summary: Get recent activity for a business
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Activity items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ActivityItem"
+
+  /businesses/{id}/leads:
+    get:
+      operationId: listLeads
+      tags: [leads]
+      summary: List leads for a business
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Leads
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Lead"
+    post:
+      operationId: createLead
+      tags: [leads]
+      summary: Create a lead
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LeadInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Lead"
+
+  /businesses/{id}/leads/{leadId}:
+    patch:
+      operationId: updateLead
+      tags: [leads]
+      summary: Update a lead
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: leadId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LeadUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Lead"
+    delete:
+      operationId: deleteLead
+      tags: [leads]
+      summary: Delete a lead
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: leadId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+
+  /businesses/{id}/bookings:
+    get:
+      operationId: listBookings
+      tags: [bookings]
+      summary: List bookings for a business
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Bookings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Booking"
+    post:
+      operationId: createBooking
+      tags: [bookings]
+      summary: Create a booking
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BookingInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Booking"
+
+  /businesses/{id}/bookings/{bookingId}:
+    patch:
+      operationId: updateBooking
+      tags: [bookings]
+      summary: Update a booking
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: bookingId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BookingUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Booking"
+
+  /templates:
+    get:
+      operationId: listTemplates
+      tags: [templates]
+      summary: List available website templates
+      responses:
+        "200":
+          description: Templates
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Template"
+
+  /ai/generate:
+    post:
+      operationId: generateContent
+      tags: [ai]
+      summary: Generate AI content
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GenerateContentInput"
+      responses:
+        "200":
+          description: Generated content
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GeneratedContent"
+
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+
+    Business:
+      type: object
+      required: [id, name, category, status, createdAt]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        category:
+          type: string
+        description:
+          type: ["string", "null"]
+        services:
+          type: ["string", "null"]
+        phone:
+          type: ["string", "null"]
+        email:
+          type: ["string", "null"]
+        address:
+          type: ["string", "null"]
+        instagram:
+          type: ["string", "null"]
+        facebook:
+          type: ["string", "null"]
+        whatsapp:
+          type: ["string", "null"]
+        colorPreference:
+          type: ["string", "null"]
+        theme:
+          type: ["string", "null"]
+        targetCustomers:
+          type: ["string", "null"]
+        status:
+          type: string
+          enum: [draft, published, archived]
+        websiteUrl:
+          type: ["string", "null"]
+        templateId:
+          type: ["integer", "null"]
+        createdAt:
+          type: string
+        updatedAt:
+          type: ["string", "null"]
+
+    BusinessInput:
+      type: object
+      required: [name, category]
+      properties:
+        name:
+          type: string
+          minLength: 1
+        category:
+          type: string
+        description:
+          type: string
+        services:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+        address:
+          type: string
+        instagram:
+          type: string
+        facebook:
+          type: string
+        whatsapp:
+          type: string
+        colorPreference:
+          type: string
+        theme:
+          type: string
+        targetCustomers:
+          type: string
+        templateId:
+          type: integer
+
+    BusinessUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        category:
+          type: string
+        description:
+          type: string
+        services:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+        address:
+          type: string
+        instagram:
+          type: string
+        facebook:
+          type: string
+        whatsapp:
+          type: string
+        colorPreference:
+          type: string
+        theme:
+          type: string
+        targetCustomers:
+          type: string
+        status:
+          type: string
+        websiteUrl:
+          type: string
+        templateId:
+          type: integer
+
+    BusinessStats:
+      type: object
+      required: [websiteVisits, totalBookings, totalLeads, totalMessages, revenue, totalCustomers]
+      properties:
+        websiteVisits:
+          type: integer
+        totalBookings:
+          type: integer
+        totalLeads:
+          type: integer
+        totalMessages:
+          type: integer
+        revenue:
+          type: number
+        totalCustomers:
+          type: integer
+        visitsChange:
+          type: number
+        bookingsChange:
+          type: number
+        leadsChange:
+          type: number
+        revenueChange:
+          type: number
+
+    ActivityItem:
+      type: object
+      required: [id, type, message, createdAt]
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+          enum: [lead, booking, message, visit]
+        message:
+          type: string
+        createdAt:
+          type: string
+
+    Lead:
+      type: object
+      required: [id, businessId, name, status, createdAt]
+      properties:
+        id:
+          type: integer
+        businessId:
+          type: integer
+        name:
+          type: string
+        email:
+          type: ["string", "null"]
+        phone:
+          type: ["string", "null"]
+        message:
+          type: ["string", "null"]
+        status:
+          type: string
+          enum: [new, contacted, qualified, lost, won]
+        notes:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+
+    LeadInput:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        message:
+          type: string
+        notes:
+          type: string
+
+    LeadUpdate:
+      type: object
+      properties:
+        status:
+          type: string
+        notes:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+
+    Booking:
+      type: object
+      required: [id, businessId, customerName, scheduledAt, status, createdAt]
+      properties:
+        id:
+          type: integer
+        businessId:
+          type: integer
+        customerName:
+          type: string
+        customerEmail:
+          type: ["string", "null"]
+        customerPhone:
+          type: ["string", "null"]
+        service:
+          type: ["string", "null"]
+        scheduledAt:
+          type: string
+        status:
+          type: string
+          enum: [pending, confirmed, completed, cancelled]
+        notes:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+
+    BookingInput:
+      type: object
+      required: [customerName, scheduledAt]
+      properties:
+        customerName:
+          type: string
+        customerEmail:
+          type: string
+        customerPhone:
+          type: string
+        service:
+          type: string
+        scheduledAt:
+          type: string
+        notes:
+          type: string
+
+    BookingUpdate:
+      type: object
+      properties:
+        status:
+          type: string
+        customerName:
+          type: string
+        customerEmail:
+          type: string
+        customerPhone:
+          type: string
+        service:
+          type: string
+        scheduledAt:
+          type: string
+        notes:
+          type: string
+
+    Template:
+      type: object
+      required: [id, name, category, description, previewUrl]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        category:
+          type: string
+        description:
+          type: string
+        previewUrl:
+          type: string
+        isPremium:
+          type: boolean
+        features:
+          type: array
+          items:
+            type: string
+
+    GenerateContentInput:
+      type: object
+      required: [type, businessName, category]
+      properties:
+        type:
+          type: string
+          enum: [description, slogans, faq, services, pricing, testimonials, about, seoKeywords, metaTitle, metaDescription, hashtags, blogArticle]
+        businessName:
+          type: string
+        category:
+          type: string
+        context:
+          type: string
+
+    GeneratedContent:
+      type: object
+      required: [type, content]
+      properties:
+        type:
+          type: string
+        content:
+          type: string
+        items:
+          type: array
+          items:
+            type: string

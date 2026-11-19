@@ -1,0 +1,429 @@
+You are a senior full-stack engineer, UI/UX designer, and SaaS architect.
+
+Build a production-ready web application called "LocalLaunch AI".
+
+Goal:
+Allow any small business owner to create a modern business website in under 5 minutes using AI.
+
+The website must look like it was designed by Apple, Stripe, Linear and Framer.
+
+------------------------------------------------
+Tech Stack
+------------------------------------------------
+
+Frontend:
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- Framer Motion
+- Shadcn UI
+- Lucide Icons
+
+Backend:
+- Supabase
+or Firebase
+
+Authentication:
+Google Login
+Email Login
+
+Database:
+PostgreSQL
+
+Deployment:
+Vercel
+
+------------------------------------------------
+Landing Page
+------------------------------------------------
+
+Create an extremely premium landing page.
+
+Sections:
+
+Hero
+Features
+Templates
+AI Demo
+Pricing
+Testimonials
+FAQ
+Footer
+
+Animated gradient background.
+
+Glassmorphism.
+
+Responsive.
+
+Dark Mode.
+
+Light Mode.
+
+------------------------------------------------
+AI Website Generator
+------------------------------------------------
+
+Business owner enters:
+
+Business Name
+
+Category
+
+Description
+
+Services
+
+Logo
+
+Business Hours
+
+Phone
+
+Email
+
+Address
+
+Instagram
+
+Facebook
+
+WhatsApp
+
+Color Preference
+
+Theme
+
+Target Customers
+
+The AI generates:
+
+Beautiful Homepage
+
+About
+
+Services
+
+Gallery
+
+Contact
+
+Testimonials
+
+FAQ
+
+Pricing
+
+Team
+
+Google Maps
+
+Call button
+
+WhatsApp button
+
+Booking section
+
+------------------------------------------------
+Templates
+
+Restaurant
+
+Salon
+
+Cafe
+
+Gym
+
+Clinic
+
+Electrician
+
+Plumber
+
+Lawyer
+
+Real Estate
+
+Photographer
+
+Mechanic
+
+Electronics Shop
+
+Hardware Store
+
+Tuition Classes
+
+Coaching Center
+
+Medical Store
+
+Dentist
+
+Fashion Boutique
+
+Car Wash
+
+Laundry
+
+------------------------------------------------
+Dashboard
+
+Beautiful analytics dashboard.
+
+Cards:
+
+Website Visits
+
+Bookings
+
+Orders
+
+Messages
+
+Revenue
+
+Customers
+
+Recent Activity
+
+Notifications
+
+------------------------------------------------
+AI Features
+
+Generate business description
+
+Generate slogans
+
+Generate FAQ
+
+Generate services
+
+Generate pricing
+
+Generate testimonials
+
+Generate About Us
+
+Generate social media posts
+
+Generate blog articles
+
+Generate SEO keywords
+
+Generate SEO meta title
+
+Generate meta description
+
+Generate hashtags
+
+Generate logo ideas
+
+------------------------------------------------
+Booking System
+
+Calendar
+
+Appointment Scheduling
+
+Time Slots
+
+Availability
+
+Email confirmation
+
+SMS reminder
+
+WhatsApp reminder
+
+------------------------------------------------
+Lead Management
+
+Store leads
+
+Export CSV
+
+Lead status
+
+Notes
+
+Assign follow-up
+
+------------------------------------------------
+WhatsApp Integration
+
+One-click chat
+
+Auto replies
+
+Order confirmation
+
+Booking confirmation
+
+------------------------------------------------
+Payments
+
+Razorpay
+
+Stripe
+
+Subscription Plans
+
+Monthly
+
+Yearly
+
+------------------------------------------------
+Admin Panel
+
+Manage Users
+
+Templates
+
+Payments
+
+Subscriptions
+
+Analytics
+
+------------------------------------------------
+Animations
+
+Framer Motion
+
+Page transitions
+
+Hover effects
+
+Gradient blobs
+
+Floating cards
+
+Smooth scrolling
+
+Animated counters
+
+Loading skeletons
+
+------------------------------------------------
+SEO
+
+Automatic sitemap
+
+robots.txt
+
+Schema markup
+
+Meta tags
+
+Open Graph
+
+Twitter cards
+
+------------------------------------------------
+Performance
+
+Lighthouse score above 95
+
+Image optimization
+
+Lazy loading
+
+Code splitting
+
+Caching
+
+------------------------------------------------
+Accessibility
+
+WCAG AA
+
+Keyboard navigation
+
+Screen reader support
+
+------------------------------------------------
+Extra Features
+
+QR Menu
+
+Digital Visiting Card
+
+AI Chatbot
+
+Customer Reviews
+
+Google Reviews
+
+Maps
+
+Newsletter
+
+Blog
+
+Coupons
+
+Referral Program
+
+Inventory
+
+Online Store
+
+Product Catalog
+
+Invoice Generator
+
+PDF quotations
+
+Email marketing
+
+Analytics Dashboard
+
+Customer Feedback
+
+------------------------------------------------
+UI Inspiration
+
+Apple
+
+Stripe
+
+Linear
+
+Vercel
+
+Framer
+
+Raycast
+
+Notion
+
+------------------------------------------------
+Color Palette
+
+Primary:
+#2563EB
+
+Accent:
+#7C3AED
+
+Success:
+#22C55E
+
+Background:
+White
+
+Dark:
+#0F172A
+
+Rounded corners:
+2xl
+
+Shadows:
+Soft premium
+
+------------------------------------------------
+Generate the complete project with proper folder structure, reusable components, TypeScript types, API routes, authentication, database schema, documentation, deployment guide, environment variables, and clean production-ready code.

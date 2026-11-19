@@ -1,0 +1,101 @@
+
+# Digital Protection Relay — Project Site
+
+A multi-page site combining project documentation, an interactive IDMT trip-curve simulator, and a smart-relay fault-logging dashboard (backed by Lovable Cloud).
+
+## Pages / Routes
+
+```text
+/                    Landing — hero, block diagram, what it is, CTAs
+/theory              Protection concepts (overcurrent, earth fault, O/U voltage, coordination, CT/PT)
+/simulator           Interactive IDMT trip-curve calculator + fault simulator
+/dashboard           Smart-relay fault log dashboard (Lovable Cloud)
+/build               Components/BOM table, circuit block diagram, safety notes
+/timeline            Week-by-week build plan (4–6 months)
+/references          Links, datasheets, IEEE C37.112 curve equations
+```
+
+Each route gets its own `head()` with unique title + description + OG tags.
+
+## 1. Landing (`/`)
+- Hero: "Digital Protection Relay for Power Systems"
+- One-line pitch + 3 CTA cards → Simulator, Dashboard, Build Guide
+- Block-diagram SVG: Line → CT/PT → Signal Cond. → MCU → Trip → Load, with Display/Logging branch
+- "Why it stands out" section (utility jobs, Siemens/ABB/Schneider angle)
+
+## 2. Theory (`/theory`)
+Sectioned long-form content:
+- Overcurrent (instantaneous + IDMT)
+- Earth fault detection (phase-current imbalance)
+- Over/under voltage
+- Relay coordination (upstream/downstream)
+- CT & PT basics
+Callout boxes for safety + isolation.
+
+## 3. IDMT Simulator (`/simulator`) — key interactive feature
+Inputs:
+- Curve type: Standard Inverse, Very Inverse, Extremely Inverse, Long-Time Inverse (IEC 60255 / IEEE C37.112)
+- Pickup current `Is` (A)
+- Time Multiplier Setting `TMS` (0.05–1.0)
+- Fault current `If` (A) — slider + numeric
+
+Outputs:
+- Computed trip time `t` using the standard equation `t = TMS · k / ((If/Is)^α − 1)`
+- Recharts line chart plotting `t` vs multiples of pickup (1.1× → 20×) for the selected curve
+- A vertical marker at current `If/Is` and a horizontal marker at `t`
+- Trip-status card: "TRIP in 0.42 s" or "No trip (below pickup)"
+- Preset buttons: L-G fault, L-L fault, 3-phase fault (loads example values)
+- Compare mode: overlay two curves for coordination visualization
+
+## 4. Fault Logging Dashboard (`/dashboard`) — Lovable Cloud
+Simulates a "smart relay" backend.
+- Auth (email/password) so multiple students can use it
+- Table: timestamp, fault type, phase, current (A), voltage (V), trip time (ms), curve used
+- Charts: faults per day (bar), fault-type breakdown (pie), current magnitude over time (line)
+- "Inject fault" form → writes a row (demo mode simulates what an ESP32 would POST)
+- Public REST endpoint `/api/public/fault-ingest` (HMAC-signed) so a real MCU could POST later
+- CSV export
+
+### Data model (Lovable Cloud / Postgres)
+```text
+fault_events(
+  id uuid pk, user_id uuid, occurred_at timestamptz,
+  fault_type text check in ('overcurrent','earth','overvoltage','undervoltage','LL','LG','3ph'),
+  phase text, current_a numeric, voltage_v numeric,
+  trip_time_ms integer, curve text, tms numeric, pickup_a numeric, notes text
+)
+```
+RLS: users see only their own rows. Grants + policies per project conventions. Separate `user_roles` table (no roles on profiles).
+
+## 5. Build Guide (`/build`)
+- Full BOM table (from the brief) with cost in INR + USD
+- Component purpose column
+- Safety callout (bold, prominent): lab supervision, isolation, low-power test rig
+- Recommended simulation-first flow (MATLAB/Simulink, ETAP)
+- Add-on ideas cards: IoT logging, ML classification, Modbus/IEC 61850
+
+## 6. Timeline (`/timeline`)
+Visual 4–6 month roadmap, week-by-week, grouped into phases: Learn → Simulate → Prototype → Integrate → Test → Document.
+
+## 7. References (`/references`)
+- The three source URLs supplied
+- IEEE C37.112, IEC 60255-151 (curve equations)
+- Datasheet links (SCT-013, STM32 Blue Pill, DS3231)
+
+## Design direction
+Industrial "control room / substation" aesthetic:
+- Dark theme default with light toggle
+- Amber/red accent for trip states, green for healthy, blue for info
+- Monospace for numeric readouts (JetBrains Mono), Inter for body, Space Grotesk for headings
+- Subtle grid background, card-based layout, sharp corners with small radius
+
+## Technical section
+- Stack: TanStack Start (existing), Tailwind v4, shadcn/ui, Recharts for plots
+- Curve math in `src/lib/idmt.ts` (pure functions, unit-testable)
+- Lovable Cloud for auth + `fault_events` table
+- Public ingest endpoint under `src/routes/api/public/fault-ingest.ts` with HMAC verification
+- Global nav in `__root.tsx` (keep `<Outlet />`), each page a separate route file with its own `head()`
+
+## Out of scope
+- Real hardware firmware (documented but not shipped)
+- SCADA/IEC 61850 protocol implementation (mentioned as future add-on)
